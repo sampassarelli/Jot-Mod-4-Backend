@@ -6,8 +6,9 @@ class Api::V1::NotesController < ApplicationController
 
   def show
     note = Note.find_by_id(params[:id])
-     render json: note
+    render json: note
   end
+
 
   def create
     note = Note.new(note_params)
@@ -25,6 +26,15 @@ class Api::V1::NotesController < ApplicationController
         render json: note
     else 
         render json: {error: note.errors.full_messages}
+    end
+  end
+
+  def destroy
+    note = Note.find_by_id(params[:id])
+    if note.destroy
+      render json: note
+    else 
+      render json: {error: note.errors.full_messages}
     end
   end
 
